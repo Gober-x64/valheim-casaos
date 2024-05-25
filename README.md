@@ -7,4 +7,4 @@ Also took some inspiration from the following reddit post: https://www.reddit.co
 To install do the following:
 
 On CasaOs:
-/image
+![Step 1](https://raw.githubusercontent.com/Gober-x64/valheim-casaos/images/Step_1.png)
