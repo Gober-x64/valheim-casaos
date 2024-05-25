@@ -1,0 +1,67 @@
+name: gober_composes
+services:
+  main_app:
+    cpu_shares: 90
+    command: []
+    container_name: valheim_srv
+    deploy:
+      resources:
+        limits:
+          memory: 7779M
+    environment:
+      - AUTO_BACKUP=1
+      - AUTO_BACKUP_DAYS_TO_LIVE=3
+      - AUTO_BACKUP_ON_SHUTDOWN=1
+      - AUTO_BACKUP_ON_UPDATE=1
+      - AUTO_BACKUP_REMOVE_OLD=1
+      - AUTO_BACKUP_SCHEDULE=*/15 * * * *
+      - AUTO_UPDATE=1
+      - AUTO_UPDATE_SCHEDULE=0 4 * * *
+      - NAME=<Server's Name>
+      - WORLD=<Worlds_Name>
+      - PASSWORD=<Secret Password, must atleast be 5 characters>
+      - PORT=2456
+      - PUBLIC=0
+      - TZ=Europe/Berlin
+    image: mbround18/valheim:latest
+    labels:
+      icon: https://gcdn.thunderstore.io/live/repository/icons/RedAnima_Valheim_Playground-RedAnima_Valheim_Playground_Mods_Season_2-1.0.7.png.256x256_q95.png
+    ports:
+      - target: 2456
+        published: "2456"
+        protocol: udp
+      - target: 2457
+        published: "2457"
+        protocol: udp
+      - target: 2458
+        published: "2458"
+        protocol: udp
+    restart: unless-stopped
+    stop_signal: SIGINT
+    volumes:
+      - type: bind
+        source: /DATA/AppData/valheim-server/saves
+        target: /home/steam/.config/unity3d/IronGate/Valheim
+      - type: bind
+        source: /DATA/AppData/valheim-server/server
+        target: /home/steam/valheim
+      - type: bind
+        source: /DATA/AppData/valheim-server/backups
+        target: /home/steam/backups
+    devices: []
+    cap_add: []
+    network_mode: bridge
+    privileged: false
+    hostname: valheim_srv
+x-casaos:
+  author: self
+  category: self
+  hostname: ""
+  icon: https://gcdn.thunderstore.io/live/repository/icons/RedAnima_Valheim_Playground-RedAnima_Valheim_Playground_Mods_Season_2-1.0.7.png.256x256_q95.png
+  index: /
+  is_uncontrolled: false
+  port_map: ""
+  scheme: http
+  store_app_id: gober_composes
+  title:
+    custom: Valheim Server
